@@ -1,3 +1,32 @@
-[gd_scene format=2]
+[gd_scene load_steps=6 format=2]
 
-[node name="Spatial" type="Spatial"]
+[sub_resource type="ProceduralSky" id=1]
+ground_bottom_color = Color( 0.156863, 0.211765, 0.164706, 1 )
+ground_horizon_color = Color( 0.584314, 0.882353, 0.854902, 1 )
+sun_color = Color( 1, 0.945098, 0.0941176, 1 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+
+[sub_resource type="PlaneMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.431373, 0.752941, 0.0392157, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=5]
+points = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
+
+[node name="Level" type="Spatial"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="Ground" type="StaticBody" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Ground"]
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+shape = SubResource( 5 )
